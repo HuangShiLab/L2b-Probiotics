@@ -1,4 +1,4 @@
-# Lang-ProBio
+# L2b-Probiotics
 
 Lang-ProBio classifies bacterial samples as probiotic or non-probiotic. The main model combines a convolutional network over 32 bp 2bRAD reads with ten gene features derived from Prokka annotations. This repository is a compact release of the research code: it keeps the executable pipeline, the exact 8-mer vocabulary, the matching gene-feature artifacts, and the seed-1 hybrid checkpoint while omitting duplicate checkpoints, caches, logs, and large raw datasets.
 
