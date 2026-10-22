@@ -1,0 +1,5 @@
+locus_tag	ftype	length_bp	gene	EC_number	COG	product
+DEMOB_0001	CDS	300	misCB			misCB
+DEMOB_0002	CDS	450	gutB_1			gutB_1
+DEMOB_0003	CDS	225				hypothetical protein
+
