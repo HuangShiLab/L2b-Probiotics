@@ -1,0 +1,13 @@
+name: lang-probio
+channels:
+  - pytorch
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - numpy>=1.24,<3
+  - scikit-learn>=1.3,<2
+  - pytorch>=2.2,<3
+  - pip:
+      - -e .
+

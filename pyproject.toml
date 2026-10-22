@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lang-probio"
+version = "1.0.0"
+description = "A compact hybrid CNN for probiotic classification from 2bRAD reads and gene annotations"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.24,<3",
+  "scikit-learn>=1.3,<2",
+  "torch>=2.2,<3",
+]
+
+[project.scripts]
+langprobio = "langprobio.cli:main"
+
+[tool.setuptools]
+packages = ["langprobio"]
+
