@@ -1,6 +1,6 @@
-# L2b-Probiotics
+# L2B-ProBio
 
-L2b-Probiotics classifies bacterial samples as probiotic or non-probiotic. The main model combines a convolutional network over 32 bp 2bRAD reads with ten gene features derived from Prokka annotations. This repository is a compact release of the research code: it keeps the executable pipeline, the exact 8-mer vocabulary, the matching gene-feature artifacts, and the seed-1 hybrid checkpoint while omitting duplicate checkpoints, caches, logs, and large raw datasets.
+L2B-ProBio classifies bacterial samples as probiotic or non-probiotic. The main model combines a convolutional network over 32 bp 2bRAD reads with ten gene features derived from Prokka annotations. This repository is a compact release of the research code: it keeps the executable pipeline, the exact 8-mer vocabulary, the matching gene-feature artifacts, and the seed-1 hybrid checkpoint while omitting duplicate checkpoints, caches, logs, and large raw datasets.
 
 ## Repository contents
 
@@ -10,7 +10,7 @@ assets/
   gene_features/                 matching top-10 gene weights
   kmer/kmer_vocab.json           8-mer vocabulary
 examples/                        two tiny inputs for a smoke test
-langprobio/                      training, evaluation, and prediction code
+l2bprobio/                       training, evaluation, and prediction code
 scripts/run_prokka.sh            FASTA-to-Prokka annotation helper
 ```
 
@@ -24,7 +24,7 @@ Python 3.10 and PyTorch 2.2 or newer are supported. Create the Conda environment
 
 ```bash
 conda env create -f environment.yml
-conda activate lang-probio
+conda activate l2b-probio
 ```
 
 For an existing Python environment, install PyTorch for the desired CPU/CUDA platform and then install this project:
@@ -70,13 +70,13 @@ Reads longer than 32 bp are truncated to their first 32 bases. Reads shorter tha
 Inspect the checkpoint architecture:
 
 ```bash
-python -m langprobio inspect
+python -m l2bprobio inspect
 ```
 
 It should report a vocabulary size of 65,537, a read dimension of 128, and a gene-feature dimension of 10. Run the included two-sample smoke test on CPU:
 
 ```bash
-python -m langprobio predict \
+python -m l2bprobio predict \
   --reads-dir examples/reads \
   --prokka-dir examples/prokka \
   --sample-reads 16 \
@@ -92,7 +92,7 @@ This checks data loading, gene-feature extraction, checkpoint loading, and infer
 With the original labeled 2bRAD files and matching Prokka outputs in place, evaluate the packaged seed-1 hybrid model with the original 80/10/10 stratified split:
 
 ```bash
-python -m langprobio evaluate \
+python -m l2bprobio evaluate \
   --reads-dir data/reads \
   --prokka-dir data/prokka \
   --checkpoint assets/checkpoints/hybrid_seed1.pt \
@@ -113,7 +113,7 @@ The command writes `metrics.json` and `predictions.tsv`. Metrics include accurac
 The original main configuration used seed 1, 200 epochs, 128-dimensional read embeddings, AdamW at `1e-4`, 4,096 reads per sample, and the ten-gene hybrid branch:
 
 ```bash
-python -m langprobio train \
+python -m l2bprobio train \
   --reads-dir data/reads \
   --prokka-dir data/prokka \
   --hybrid \
@@ -137,7 +137,7 @@ The best validation-balanced-accuracy checkpoint is saved. Evaluate it by replac
 Generate Prokka annotations from matching genome FASTA files first, then run:
 
 ```bash
-python -m langprobio predict \
+python -m l2bprobio predict \
   --reads-dir data/unlabeled \
   --prokka-dir data/prokka_unlabeled \
   --checkpoint assets/checkpoints/hybrid_seed1.pt \
